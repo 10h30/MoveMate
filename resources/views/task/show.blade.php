@@ -12,13 +12,15 @@
         <div><strong>Time Estimate:</strong> {{ $task->time_estimate }} hour</div>
         <div><strong>Category:</strong> {{ $task->category->name }}</div>
         <div><strong>Owner:</strong> {{ $task->user->name }}</div>
-        <div class="mt-4 mb-4">
-            <form action="/task/{{ $task->id }}/toggle" method="POST" class="d-inline" >
-                @csrf
-                @method('PATCH')
-                <x-form-button>{{ (! $task->completed) ? 'Mark Completed' : "Greate! You nailed it!" }}</x-form-button>
-            </form>
-        </div>
+        @auth
+            <div class="mt-4 mb-4">
+                <form action="/task/{{ $task->id }}/toggle" method="POST" class="d-inline" >
+                    @csrf
+                    @method('PATCH')
+                    <x-form-button>{{ (! $task->completed) ? 'Mark Completed' : "Greate! You nailed it!" }}</x-form-button>
+                </form>
+            </div>
+        @endauth
     </div>   
     <div class="mt-5">
         <a href="/task/{{ $task->id }}/edit" class="text-sm text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
