@@ -5,7 +5,7 @@
             <x-nav-link href="/register">Register</x-nav-link>
         @endguest
         @auth
-            <x-nav-link type="button" href="/task/create">Create new task</x-nav-link>
+            <p class="text-sm text-bold">Welcome back, {{ Auth::user()->name }}</p>
             <form method="POST" action="/logout">
                 @csrf
                   <x-form-button>Log Out</x-form-button>

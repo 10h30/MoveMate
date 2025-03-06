@@ -1,11 +1,14 @@
 <x-layout>
     <x-slot:heading>Task Page</x-slot:heading>
-    
+
     @if (session('success'))
     <div class="bg-green-500 text-white p-3 rounded mb-4">
         {{ session('success') }}
     </div>
     @endif
+    <div class="mb-5">
+        <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href="/task/create">Create new task</a>
+    </div>
 
     @foreach ($tasks as $task)
     <div class="block border-2 border-gray-500 p-2">
@@ -19,3 +22,5 @@
 
     <div class="mt-2">{{$tasks -> links()}}</div>
 </x-layout>
+
+$completedCount = Task::where('completed', true)->count();
