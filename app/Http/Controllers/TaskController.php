@@ -54,7 +54,7 @@ class TaskController extends Controller
             'categories' => $categories
         ]);
     }
-    
+
     public function update(Task $task) {
         $validatedAtts = request()->validate([
             'name' => ['required'],
@@ -73,6 +73,12 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->route('task.index')->with('success', 'Task deleted successfully');
+    }
+
+    public function toggleComplete(Task $task) {
+        $task->completed = !$task->completed;
+        $task->save();
+        return redirect()->back();
     }
 
 }
