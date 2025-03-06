@@ -18,7 +18,7 @@ class Task extends Model
             if (is_null($task->completed)) {
                 $task->completed = false; // Ensure completed is false when creating a new task
             }
-            $task->user_id = Auth::id(); // Set user_id automatically
+             $task->user_id = Auth::id(); // Set user_id automatically
         });
     }
 

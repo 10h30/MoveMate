@@ -12,8 +12,6 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 
-
-
 Route::get('/', [TaskController::class, 'index']);
 Route::get('/task', [TaskController::class, 'index'])->name('task.index');
 Route::get('/task/create', [TaskController::class, 'create']);
@@ -22,6 +20,8 @@ Route::post('/task/create', [TaskController::class, 'store'])->name('task.create
 Route::delete('/task/{task}', [TaskController::class, 'destroy']);
 Route::get('/task/{task}/edit', [TaskController::class, 'edit']);
 Route::patch('/task/{task}', [TaskController::class, 'update']);
+Route::patch('/task/{task}/toggle', [TaskController::class, 'toggleComplete']);
+
 
 Route::get('/register', [UserRegisterController::class, 'register']);
 Route::post('/register', [UserRegisterController::class, 'store']);

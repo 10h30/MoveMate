@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     public function index() {
-        $task = Task::latest('updated_at')->Paginate(20);
-        return view('task.index', [
-            'tasks' => $task
-        ]);
+        $totalTasks = Task::count(); // Count all tasks
+        $completedTasks = Task::where('completed', true)->count(); // Coun
+        $tasks = Task::latest('updated_at')->Paginate(20);
+        return view('task.index', compact('tasks','totalTasks','completedTasks'));
     }
 
     public function show(Task $task) {
