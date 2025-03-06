@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use App\Models\Category;
 use App\Models\Task;
 use App\Models\User;
@@ -9,83 +10,15 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 
-Route::get('/', function () {
-    $task = Task::latest('updated_at')->Paginate(20);
-    return view('task.index', [
-        'tasks' => $task
-    ]);
-});
+Route::get('/', [TaskController::class, 'index']);
+Route::get('/task', [TaskController::class, 'index'])->name('task.index');
+Route::get('/task/create', [TaskController::class, 'create']);
+Route::get('/task/{task}', [TaskController::class, 'show'])->name('task.show');
+Route::post('/task/create', [TaskController::class, 'store'])->name('task.create');
+Route::delete('/task/{task}', [TaskController::class, 'destroy']);
+Route::get('/task/{task}/edit', [TaskController::class, 'edit']);
 
-
-
-Route::get('/task', function () {
-    $task = Task::latest('updated_at')->Paginate(20);
-    return view('task.index', [
-        'tasks' => $task
-    ]);
-});
-
-
-Route::get('/task/create', function () {
-    $categories = Category::all();
-    return view('task.create', [
-        'categories' => $categories
-    ]);
-});
-
-Route::post('/task/create', function () {
-    //dd(Auth::id());
-    $validatedAtts = request()->validate([
-        'name' => ['required'],
-        'description' => ['required'],
-        'category_id' => ['required'],
-        'location' => ['required'],
-        'time_estimate' => ['required'],
-    ]);
-  
-    $validatedAtts['user_id'] = Auth::id();
-
-    //dd($validatedAtts);
-
-    $task = Task::create(
-        $validatedAtts
-    );
-
-    return redirect()->route('task.create')->with('success', 'Task created successfully!');
-})->name('task.create');
-
-Route::get('/task/{id}', function ($id) {
-    $task = Task::find($id);
-    return view('task.show', [
-        'task' => $task
-    ]);
-});
-
-Route::get('/task/{id}/edit', function ($id) {
-    $task = Task::find($id);
-    $categories = Category::all();
-    return view('task.edit', [
-        'task' => $task,
-        'categories' => $categories
-    ]);
-});
-
-Route::patch('/task/{id}', function ($id) {
-    $task = Task::find($id);
-    $validatedAtts = request()->validate([
-        'name' => ['required'],
-        'description' => ['required'],
-        'category_id' => ['required'],
-        'location' => ['required'],
-        'time_estimate' => ['required'],
-    ]);
-    //dd($task);
-    $task->update($validatedAtts);
-
-    return redirect('/task/'.$task->id);
-
-
-});
+Route::patch('/task/{task}', [TaskController::class, 'update']);
 
 
 

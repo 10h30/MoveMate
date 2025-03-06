@@ -1,5 +1,11 @@
 <x-layout>
     <x-slot:heading>Task Page</x-slot:heading>
+    
+    @if (session('success'))
+    <div class="bg-green-500 text-white p-3 rounded mb-4">
+        {{ session('success') }}
+    </div>
+    @endif
 
     @foreach ($tasks as $task)
     <div class="block border-2 border-gray-500 p-2">

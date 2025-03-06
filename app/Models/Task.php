@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Task extends Model
 {
@@ -12,6 +13,7 @@ class Task extends Model
     protected $attributes = [
         'completed' => false, // Set default value for completed
     ];
+
 
     public function user() {
         return $this->belongsTo(User::class);

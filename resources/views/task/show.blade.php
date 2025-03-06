@@ -13,5 +13,12 @@
     </div>   
     <div class="mt-5">
         <a href="/task/{{ $task->id }}/edit" class="text-sm text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <form action="/task/{{ $task->id }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <a href="javascript:void(0)" onclick="if(confirm('Are you sure you want to delete this task?')){this.closest('form').submit()}">
+                Delete
+            </a>
+        </form>    
     </div>
 </x-layout>
